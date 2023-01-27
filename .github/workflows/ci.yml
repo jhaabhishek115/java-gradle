@@ -50,7 +50,7 @@ jobs:
       run: |
         docker build -t $REPO .
         docker tag $REPO:latest ${{secrets.DOCKER_USERNAME}}/$REPO:latest
-        docker push ${{secrets.DOCKER_USER}}/$REPO
+        docker push ${{secrets.DOCKER_USERNAME}}/$REPO
     
     - name: Docker Pull & Run From Hub
       uses: appleboy/ssh-action@master
@@ -61,7 +61,7 @@ jobs:
         envs: GITHUB_SHA
         script: |
           docker login
-          docker pull ${{secrets.DOCKER_USER}}/$REPO
+          docker pull ${{secrets.DOCKER_USERNAME}}/$REPO
           docker stop backend_server
           docker rm backednd_server 
           docker run --detach --name backend_server -p 80:8080 devops115/java-gradle
